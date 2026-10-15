@@ -88,9 +88,9 @@ function printGithubUserProfile(username) {
     })
     .then((data) => {
       contenido = `<article>
-      <img src="${data.avatar_url}" alt="">
-      <h1>${data.name}</h1>
-                   </article>`;
+                  <img src="${data.avatar_url}" alt="">
+                  <h1>${data.name}</h1>
+                  </article>`;
 
       document.body.insertAdjacentHTML("beforeend", contenido);
       return {
@@ -177,18 +177,14 @@ boton.addEventListener("click", () => {
 // Obtener varios usuarios de GitHub utilizando Promise.all().
 // Devolver un array con la URL y el nombre de cada usuario.
 
-// EJERCICIO 9
-// Obtener varios usuarios de GitHub utilizando Promise.all()
-
 function fetchGithubUsers(userNames) {
   const promesas = userNames.map((name) => {
-    return fetch(`https://api.github.com/users/${name}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Error HTTP: " + res.status);
-        }
-        return res.json();
-      });
+    return fetch(`https://api.github.com/users/${name}`).then((res) => {
+      if (!res.ok) {
+        throw new Error("Error HTTP: " + res.status);
+      }
+      return res.json();
+    });
   });
 
   return Promise.all(promesas)
@@ -199,7 +195,7 @@ function fetchGithubUsers(userNames) {
 
         return {
           name: usuario.name,
-          url: usuario.html_url
+          url: usuario.html_url,
         };
       });
     })
@@ -208,6 +204,6 @@ function fetchGithubUsers(userNames) {
       throw error;
     });
 }
-// fetchGithubUsers(["octocat", "mojombo"])
-//   .then((data) => console.log(data))
-//   .catch((error) => console.error(error));
+fetchGithubUsers(["octocat", "mojombo"])
+  .then((data) => console.log(data))
+  .catch((error) => console.error(error));
